@@ -808,26 +808,33 @@
   }
 </style>
 </head>
-<body>
-  <!-- FAIXA VITALÍCIO · BOX HTM · cole logo depois da tag <body> · remover em 23/11 -->
+<body><!-- BARRA VITALÍCIO · BOX HTM · cole logo antes de </body> · remover em 23/11 -->
 <style>
-.htm-vit{background:#0E0E10;color:#F2EFE8;font-family:Montserrat,system-ui,sans-serif;padding:14px 20px;text-align:center;position:relative;z-index:50}
-.htm-vit__in{max-width:960px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 18px}
-.htm-vit__tag{background:#F2B705;color:#0E0E10;font:700 11px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 12px;border-radius:99px;white-space:nowrap}
-.htm-vit__txt{font-size:14px;line-height:1.45;margin:0}
-.htm-vit__txt b{color:#F2B705}
-.htm-vit__cta{background:#F2B705;color:#0E0E10;font-weight:800;font-size:14px;text-decoration:none;padding:10px 18px;border-radius:99px;white-space:nowrap}
-.htm-vit__cta:hover{background:#FFE58A}
-@media(max-width:640px){.htm-vit__txt{font-size:13px}}
+.htm-vit{position:fixed;left:16px;right:16px;bottom:16px;z-index:9999;background:#FFFFFF;color:#0E0E10;border:3px solid #F2B705;font-family:Montserrat,system-ui,sans-serif;border-radius:20px;padding:14px 18px;box-shadow:0 10px 30px rgba(0,0,0,.35);max-width:980px;margin:0 auto;animation:htmVitIn .5s ease-out .8s both}
+.htm-vit__in{display:flex;align-items:center;gap:14px 18px;flex-wrap:wrap;justify-content:space-between}
+.htm-vit__tag{display:inline-block;background:#0E0E10;color:#F2B705;font:700 11px/1 "IBM Plex Mono",ui-monospace,monospace;letter-spacing:.08em;text-transform:uppercase;padding:6px 10px;border-radius:99px;margin-bottom:6px}
+.htm-vit__h{margin:0;font-size:19px;line-height:1.2;font-weight:900;letter-spacing:-.01em}
+.htm-vit__txt{margin:4px 0 0;font-size:13.5px;line-height:1.4;font-weight:500;max-width:640px}
+.htm-vit__txt b{font-weight:900}
+.htm-vit__cta{background:#F2B705;color:#0E0E10;font-weight:800;font-size:14px;text-decoration:none;padding:12px 18px;border-radius:99px;white-space:nowrap}
+.htm-vit__cta:hover{background:#0E0E10;color:#F2B705}
+.htm-vit__x{position:absolute;top:6px;right:10px;background:none;border:0;color:#0E0E10;font-size:18px;line-height:1;cursor:pointer;opacity:.6}
+body{padding-bottom:120px}
+@keyframes htmVitIn{from{transform:translateY(140%)}to{transform:none}}
+@media(max-width:640px){.htm-vit{left:10px;right:10px;bottom:10px;padding:12px 14px}.htm-vit__h{font-size:17px}.htm-vit__txt{font-size:13px}.htm-vit__cta{width:100%;text-align:center}body{padding-bottom:180px}}
 </style>
-<div class="htm-vit" role="region" aria-label="Oferta acesso vitalício">
+<div class="htm-vit" id="htmVit" role="region" aria-label="Oferta acesso vitalício">
+  <button class="htm-vit__x" type="button" aria-label="Fechar" onclick="document.getElementById('htmVit').style.display='none'">×</button>
   <div class="htm-vit__in">
-    <span class="htm-vit__tag">Última vez com acesso vitalício · até 22/11, 23h59</span>
-    <p class="htm-vit__txt">Garanta a BOX por <b>R$ 47</b>, receba a <b>2027 com a Eme</b>, nossa assistente planejadora de conteúdo com IA, no dia 23, e todas as próximas versões anuais.</p>
+    <div>
+      <span class="htm-vit__tag">Até 22/11, 23h59</span>
+      <p class="htm-vit__h">Acesso vitalício à BOX por R$ 47. Última vez.</p>
+      <p class="htm-vit__txt">Inclui a BOX 2027 com a Eme, a IA que planeja seu conteúdo, liberada em 23/11.</p>
+    </div>
     <a class="htm-vit__cta" href="#comprar">Garantir meu acesso vitalício →</a>
   </div>
 </div>
-<!-- FIM FAIXA VITALÍCIO -->
+<!-- FIM BARRA VITALÍCIO -->
 
 <!-- ═══════════════════ HERO ═══════════════════ -->
 <section class="hero">
