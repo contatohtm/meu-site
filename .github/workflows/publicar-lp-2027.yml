@@ -1,0 +1,62 @@
+# Publica a LP 2027 em 23/11/2026 às 00h de Brasília (03h UTC).
+# Salve este arquivo na branch main, em: .github/workflows/publicar-lp-2027.yml
+# A LP nova fica na branch lp-2027 até a hora marcada.
+
+name: Publicar LP 2027
+
+on:
+  schedule:
+    - cron: "0 3 23 11 *"   # 23/11, 03h UTC = 00h de Brasília
+  workflow_dispatch:         # botão manual em Actions, para teste ou emergência
+    inputs:
+      teste:
+        description: "Só testar (não publica). Mude para false para publicar agora."
+        required: true
+        default: "true"
+
+permissions:
+  contents: write
+
+jobs:
+  publicar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Conferir se é a data certa
+        id: data
+        run: |
+          if [ "${{ github.event_name }}" = "schedule" ] && [ "$(date -u +%Y)" != "2026" ]; then
+            echo "Fora de 2026. Nada a fazer."
+            echo "seguir=nao" >> "$GITHUB_OUTPUT"
+          else
+            echo "seguir=sim" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Baixar o repositório
+        if: steps.data.outputs.seguir == 'sim'
+        uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Trazer os arquivos da LP 2027 para a main
+        if: steps.data.outputs.seguir == 'sim'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin lp-2027
+          # Copia os arquivos da branch lp-2027 por cima da main (sem conflito de merge).
+          git checkout origin/lp-2027 -- .
+          git status --short
+          if git diff --cached --quiet; then
+            echo "Nada mudou: a main já está igual à lp-2027."
+            exit 0
+          fi
+          git commit -m "Publica a LP 2027"
+
+      - name: Publicar (enviar para a main)
+        if: steps.data.outputs.seguir == 'sim' && (github.event_name == 'schedule' || github.event.inputs.teste == 'false')
+        run: git push origin HEAD:main
+
+      - name: Aviso de teste
+        if: steps.data.outputs.seguir == 'sim' && github.event_name == 'workflow_dispatch' && github.event.inputs.teste != 'false'
+        run: echo "Teste ok. Nada foi publicado. A troca real acontece em 23/11 às 00h."
